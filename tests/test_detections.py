@@ -1,6 +1,6 @@
 """Detection regression: every rule fires on its positives, not its negatives.
 
-This is the heart of the repo — true-positive / false-positive testing of
+This is the heart of the repo - true-positive / false-positive testing of
 each Sigma rule against labeled sample events, run entirely offline.
 """
 import pytest

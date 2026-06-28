@@ -13,20 +13,20 @@
 
 ## 📖 Overview
 
-This repo treats Sigma rules the way engineers treat code — every rule is **validated**, **tested against labeled events**, and **compiled to a SIEM query automatically**. Push a change and CI tells you, in seconds, whether your rule still catches the attack it's supposed to and whether it started firing on something benign.
+This repo treats Sigma rules the way engineers treat code - every rule is **validated**, **tested against labeled events**, and **compiled to a SIEM query automatically**. Push a change and CI tells you, in seconds, whether your rule still catches the attack it's supposed to and whether it started firing on something benign.
 
-That last part is the bit most Sigma repos skip. Anyone can write a YAML file full of rules. The hard, valuable part of detection engineering is *proving* a rule does what it claims — and not flooding the SOC with false positives. So I built an offline Sigma evaluator and wired every rule up to **true-positive / false-positive test cases** that run in CI. No SIEM required.
+That last part is the bit most Sigma repos skip. Anyone can write a YAML file full of rules. The hard, valuable part of detection engineering is *proving* a rule does what it claims - and not flooding the SOC with false positives. So I built an offline Sigma evaluator and wired every rule up to **true-positive / false-positive test cases** that run in CI. No SIEM required.
 
 I focused on **Windows + Sysmon** (process creation, registry, process access) because that's where most endpoint detection lives, and compiled everything to **Splunk SPL** since that's the stack I know best.
 
 **What's in the box:**
 
-- **8 Sigma rules** across Execution, Persistence, Defense Evasion, Credential Access, and C2 — mapped to **9 MITRE ATT&CK techniques**
+- **8 Sigma rules** across Execution, Persistence, Defense Evasion, Credential Access, and C2 - mapped to **9 MITRE ATT&CK techniques**
 - An **offline detection engine** that evaluates Sigma logic against sample events (the test harness)
 - **TP/FP test cases** for every rule, run as a regression suite
 - **One-command compilation** to Splunk SPL + a Splunk `savedsearches.conf`
 - An auto-generated **MITRE ATT&CK Navigator layer** showing coverage
-- **CI** that validates, tests, and compiles on every push (Python 3.10–3.12)
+- **CI** that validates, tests, and compiles on every push (Python 3.10-3.12)
 
 ---
 
@@ -56,7 +56,7 @@ I focused on **Windows + Sysmon** (process creation, registry, process access) b
               └────────────────────┘
 ```
 
-The whole thing runs in [GitHub Actions](.github/workflows/ci.yml) on every push — so a rule change that breaks detection coverage turns the build red before it's ever merged.
+The whole thing runs in [GitHub Actions](.github/workflows/ci.yml) on every push - so a rule change that breaks detection coverage turns the build red before it's ever merged.
 
 ---
 
@@ -118,7 +118,7 @@ NOT (SourceImage IN ("*\\wininit.exe", "*\\MsMpEng.exe", "*\\svchost.exe"))
 
 A Sigma rule is just a condition over fields. The question that matters is: **does it actually match the malicious behavior, and does it leave the benign behavior alone?**
 
-Each rule has a companion file in [`tests/cases/`](tests/cases/) with `positive` events (the attack — must fire) and `negative` events (look-alike benign activity — must NOT fire). For example, the certutil rule's cases:
+Each rule has a companion file in [`tests/cases/`](tests/cases/) with `positive` events (the attack - must fire) and `negative` events (look-alike benign activity - must NOT fire). For example, the certutil rule's cases:
 
 ```yaml
 positive:
@@ -129,7 +129,7 @@ negative:
     CommandLine: 'certutil.exe -hashfile C:\Users\dan\file.txt SHA256'   # benign
 ```
 
-[`sigmatools/matcher.py`](sigmatools/matcher.py) is a from-scratch Sigma evaluator (field modifiers, wildcards, `and/or/not`, `N of them`, etc. — see its docstring for the supported subset) so these tests run **offline and deterministically**. That's the same discipline as true/false-positive testing in a real detection-engineering program, minus the SIEM bill.
+[`sigmatools/matcher.py`](sigmatools/matcher.py) is a from-scratch Sigma evaluator (field modifiers, wildcards, `and/or/not`, `N of them`, etc. - see its docstring for the supported subset) so these tests run **offline and deterministically**. That's the same discipline as true/false-positive testing in a real detection-engineering program, minus the SIEM bill.
 
 ---
 
@@ -165,19 +165,19 @@ sigma-detection-as-code/
 
 1. Drop a Sigma YAML in `rules/windows/` (include `id`, an `attack.tXXXX` tag, and a `level`).
 2. Add a `tests/cases/<same-filename>.yml` with at least one `positive` and one `negative` event.
-3. `python -m sigmatools validate && pytest -q` — green means it's well-formed and behaves.
+3. `python -m sigmatools validate && pytest -q` - green means it's well-formed and behaves.
 4. `python -m sigmatools convert` to regenerate the SPL.
 
-CI enforces steps 1–3 on every push.
+CI enforces steps 1-3 on every push.
 
 ---
 
 ## ⚠️ Note
 
-These rules are written for learning and lab use against Sysmon-style telemetry. Tune thresholds, exclusions, and field names to your own environment before deploying — every network's "normal" is different, and an untuned rule is just a false-positive generator.
+These rules are written for learning and lab use against Sysmon-style telemetry. Tune thresholds, exclusions, and field names to your own environment before deploying - every network's "normal" is different, and an untuned rule is just a false-positive generator.
 
 ---
 
 ## 📄 License
 
-MIT — see [LICENSE](LICENSE). Built as part of my [CyberSecurity Portfolio](https://github.com/DMYourz/CyberSecurity-Portfolio).
+MIT - see [LICENSE](LICENSE). Built as part of my [CyberSecurity Portfolio](https://github.com/DMYourz/CyberSecurity-Portfolio).
