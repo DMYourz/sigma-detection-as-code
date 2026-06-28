@@ -1,0 +1,6 @@
+positive:
+  - Image: 'C:\Windows\System32\rundll32.exe'
+    CommandLine: 'rundll32.exe javascript:"\..\mshtml,RunHTMLApplication ";alert(1)'
+negative:
+  - Image: 'C:\Windows\System32\rundll32.exe'
+    CommandLine: 'rundll32.exe shell32.dll,Control_RunDLL desk.cpl'

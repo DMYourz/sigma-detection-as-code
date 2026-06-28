@@ -1,0 +1,1 @@
+TargetObject IN ("*\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\*", "*\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce\\*", "*\\Software\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Run\\*") NOT (Image IN ("*\\explorer.exe", "*\\msiexec.exe"))

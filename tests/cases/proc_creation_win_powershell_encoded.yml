@@ -1,0 +1,10 @@
+positive:
+  - Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+    CommandLine: 'powershell.exe -nop -w hidden -enc SQBFAFgAKABOAGUAdwAtAE8AYgBqAGUAYwB0AA=='
+  - Image: 'C:\Program Files\PowerShell\7\pwsh.exe'
+    CommandLine: 'pwsh -EncodedCommand RwBlAHQALQBQAHIAbwBjAGUAcwBzAA=='
+negative:
+  - Image: 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+    CommandLine: 'powershell.exe -File C:\scripts\nightly-backup.ps1'
+  - Image: 'C:\Windows\System32\cmd.exe'
+    CommandLine: 'cmd.exe /c dir'

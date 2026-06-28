@@ -1,0 +1,1 @@
+Image="*\\mshta.exe" CommandLine IN ("*http://*", "*https://*", "*vbscript:*", "*javascript:*")

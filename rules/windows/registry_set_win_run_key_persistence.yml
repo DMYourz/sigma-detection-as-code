@@ -1,0 +1,28 @@
+title: Registry Run Key Persistence
+id: 7e1b2c3d-4f5a-4b6c-8d9e-0f1a2b3c4d07
+status: experimental
+description: Detects creation or modification of autostart Run/RunOnce registry keys by a non-standard process, a classic persistence mechanism.
+references:
+    - https://attack.mitre.org/techniques/T1547/001/
+author: Daniel Mochkarovsky
+date: 2026/06/28
+tags:
+    - attack.persistence
+    - attack.t1547.001
+logsource:
+    category: registry_set
+    product: windows
+detection:
+    selection:
+        TargetObject|contains:
+            - '\Software\Microsoft\Windows\CurrentVersion\Run\'
+            - '\Software\Microsoft\Windows\CurrentVersion\RunOnce\'
+            - '\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Run\'
+    filter_legit:
+        Image|endswith:
+            - '\explorer.exe'
+            - '\msiexec.exe'
+    condition: selection and not filter_legit
+falsepositives:
+    - Software installers writing autostart entries
+level: medium

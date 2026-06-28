@@ -1,0 +1,8 @@
+positive:
+  - Image: 'C:\Windows\System32\wbem\WMIC.exe'
+    CommandLine: 'wmic.exe process call create "C:\Users\Public\evil.exe"'
+  - Image: 'C:\Windows\System32\wbem\WMIC.exe'
+    CommandLine: 'wmic /node:10.0.0.5 process call create calc.exe'
+negative:
+  - Image: 'C:\Windows\System32\wbem\WMIC.exe'
+    CommandLine: 'wmic process list brief'

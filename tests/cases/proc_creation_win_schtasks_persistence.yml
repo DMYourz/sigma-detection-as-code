@@ -1,0 +1,6 @@
+positive:
+  - Image: 'C:\Windows\System32\schtasks.exe'
+    CommandLine: 'schtasks.exe /create /sc minute /mo 1 /tn Updater /tr C:\Users\Public\evil.exe'
+negative:
+  - Image: 'C:\Windows\System32\schtasks.exe'
+    CommandLine: 'schtasks.exe /query /tn \Microsoft\Windows\UpdateOrchestrator'

@@ -1,0 +1,30 @@
+title: Certutil Download via URLCache
+id: 7e1b2c3d-4f5a-4b6c-8d9e-0f1a2b3c4d02
+status: experimental
+description: Detects the certutil LOLBin being used to download a file from a remote location, a common ingress tool transfer technique.
+references:
+    - https://attack.mitre.org/techniques/T1105/
+    - https://lolbas-project.github.io/lolbas/Binaries/Certutil/
+author: Daniel Mochkarovsky
+date: 2026/06/28
+tags:
+    - attack.command-and-control
+    - attack.t1105
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_tool:
+        Image|endswith: '\certutil.exe'
+        CommandLine|contains:
+            - 'urlcache'
+            - 'verifyctl'
+    selection_net:
+        CommandLine|contains:
+            - 'http'
+            - 'ftp'
+            - '\\'
+    condition: selection_tool and selection_net
+falsepositives:
+    - Certificate revocation list retrieval in some enterprise environments
+level: high

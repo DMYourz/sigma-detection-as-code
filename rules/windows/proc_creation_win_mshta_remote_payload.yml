@@ -1,0 +1,26 @@
+title: Mshta Executing Remote Payload
+id: 7e1b2c3d-4f5a-4b6c-8d9e-0f1a2b3c4d06
+status: experimental
+description: Detects mshta.exe executing a remote URL or inline script, a signed-binary proxy execution technique used to retrieve and run HTA/script payloads.
+references:
+    - https://attack.mitre.org/techniques/T1218/005/
+author: Daniel Mochkarovsky
+date: 2026/06/28
+tags:
+    - attack.defense-evasion
+    - attack.t1218.005
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\mshta.exe'
+        CommandLine|contains:
+            - 'http://'
+            - 'https://'
+            - 'vbscript:'
+            - 'javascript:'
+    condition: selection
+falsepositives:
+    - Unknown
+level: high

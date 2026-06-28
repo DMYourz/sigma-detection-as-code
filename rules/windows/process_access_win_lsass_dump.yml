@@ -1,0 +1,32 @@
+title: Suspicious LSASS Process Access
+id: 7e1b2c3d-4f5a-4b6c-8d9e-0f1a2b3c4d08
+status: experimental
+description: Detects a process opening a handle to LSASS with access rights commonly associated with credential dumping, excluding known-good system callers.
+references:
+    - https://attack.mitre.org/techniques/T1003/001/
+author: Daniel Mochkarovsky
+date: 2026/06/28
+tags:
+    - attack.credential-access
+    - attack.t1003.001
+logsource:
+    category: process_access
+    product: windows
+detection:
+    selection:
+        TargetImage|endswith: '\lsass.exe'
+        GrantedAccess:
+            - '0x1010'
+            - '0x1410'
+            - '0x1438'
+            - '0x143a'
+            - '0x1fffff'
+    filter_known:
+        SourceImage|endswith:
+            - '\wininit.exe'
+            - '\MsMpEng.exe'
+            - '\svchost.exe'
+    condition: selection and not filter_known
+falsepositives:
+    - Some EDR and backup agents legitimately read LSASS
+level: high

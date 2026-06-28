@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sigmatools"
+version = "1.0.0"
+description = "Detection-as-code: author, test, and compile Sigma rules to Splunk SPL with offline TP/FP testing and MITRE ATT&CK coverage."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Daniel Mochkarovsky" }]
+keywords = ["sigma", "detection-engineering", "detection-as-code", "splunk", "siem", "mitre-attack", "blue-team"]
+dependencies = ["pysigma>=0.11", "pysigma-backend-splunk>=1.1", "PyYAML>=6.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "ruff>=0.4"]
+
+[project.scripts]
+sigmatools = "sigmatools.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/DMYourz/sigma-detection-as-code"
+Portfolio = "https://github.com/DMYourz/CyberSecurity-Portfolio"
+
+[tool.setuptools]
+packages = ["sigmatools"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501"]
